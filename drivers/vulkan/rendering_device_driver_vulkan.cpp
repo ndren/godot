@@ -1815,6 +1815,9 @@ RDD::TextureID RenderingDeviceDriverVulkan::texture_create(const TextureFormat &
 
 	if (p_format.shareable_formats.size()) {
 		create_info.flags |= VK_IMAGE_CREATE_MUTABLE_FORMAT_BIT;
+		if (p_format.shareable_formats.size() == 1) {
+			create_info.flags |= VK_IMAGE_CREATE_EXTENDED_USAGE_BIT;
+		}
 
 		if (enabled_device_extension_names.has(VK_KHR_IMAGE_FORMAT_LIST_EXTENSION_NAME)) {
 			VkFormat *vk_allowed_formats = ALLOCA_ARRAY(VkFormat, p_format.shareable_formats.size());
